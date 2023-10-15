@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  *
  * @author Irina Ilina
  */
-public class ApplicationTest {
+public class ReadQuestionsTest {
 
     /**
      * Наименование файла.
