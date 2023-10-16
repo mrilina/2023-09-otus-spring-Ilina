@@ -1,0 +1,10 @@
+# Добавить сюда своих вопросов. Эту строку надо пропустить при настройке CsvToBean (withSkipLines)
+Author of "The Golden Key or the Adventures of Pinocchio"?;Tolstoy A.N.%true|Pushkin A.S.%false|Dostoevsky F.M.%false
+How many letters are in the English alphabet?;24%false|26%true
+How many colors are in the rainbow?;3%false|5%false|7%true|8%false
+The average distance from Saturn to the Sun is (sr. km.)?;1.21%false|1.34%false|1.43%true
+When the word "Frigate" appeared in Russian ...?;Peter I%true|Catherine II%false|Nicholas I%false
+How many continents are on earth?;6%true|5%false|7%false|4%false
+Is there life on Mars?;Science doesn't know this yet%true|Certainly. The red UFO is from Mars. And green is from Venus%false|Absolutely not%false
+How should resources be loaded form jar in Java?;ClassLoader#geResourceAsStream or ClassPathResource#getInputStream%true|ClassLoader#geResource#getFile + FileReader%false|Wingardium Leviosa%false
+Which option is a good way to handle the exception?;@SneakyThrow%false|e.printStackTrace()%false|Rethrow with wrapping in business exception (for example, QuestionReadException)%true|Ignoring exception%false
