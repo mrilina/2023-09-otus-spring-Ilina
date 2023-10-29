@@ -85,7 +85,7 @@ public class TestServiceImplTest {
     void testExecuteTestCorrect() {
         given(questionDao.findAll()).willReturn(questions);
 
-        var testResult = testService.executeTestFor(new Student("Ivan", "Ivanov"));
+        var testResult = testService.executeTestFor(student);
         assertThat(testResult).isNotNull();
         assertEquals(2, testResult.getAnsweredQuestions().size());
     }
@@ -95,6 +95,6 @@ public class TestServiceImplTest {
     void testExecuteTestException() {
         var testService = mock(TestServiceImpl.class);
         doThrow(QuestionReadException.class).when(testService).executeTestFor(any());
-        assertThrows(QuestionReadException.class, () -> testService.executeTestFor(new Student("Ivan", "Ivanov")));
+        assertThrows(QuestionReadException.class, () -> testService.executeTestFor(student));
     }
 }
