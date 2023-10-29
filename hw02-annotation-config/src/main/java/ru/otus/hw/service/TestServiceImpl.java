@@ -41,6 +41,7 @@ public class TestServiceImpl implements TestService {
         ioService.printFormattedLine("Please answer the questions below%n");
         var questions = questionDao.findAll();
         var testResult = new TestResult(student);
+
         for (var question : questions) {
             ioService.printLine(question.text());
             var answers = question.answers();

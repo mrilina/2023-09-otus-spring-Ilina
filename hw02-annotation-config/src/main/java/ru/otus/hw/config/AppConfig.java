@@ -3,11 +3,12 @@ package ru.otus.hw.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import ru.otus.hw.aspect.LoggingAspect;
 import ru.otus.hw.dao.CsvQuestionDao;
 import ru.otus.hw.dao.QuestionDao;
+import ru.otus.hw.dao.dto.QuestionDtoConverter;
+import ru.otus.hw.dao.dto.QuestionDtoConverterImpl;
 import ru.otus.hw.service.IOService;
 import ru.otus.hw.service.ResultService;
 import ru.otus.hw.service.ResultServiceImpl;
@@ -26,7 +27,6 @@ import ru.otus.hw.service.TestServiceImpl;
  */
 @PropertySource("classpath:application.properties")
 @Configuration
-@EnableAspectJAutoProxy
 public class AppConfig implements TestConfig, TestFileNameProvider {
 
     @Value("${test.rightAnswersCountToPass}")
@@ -68,19 +68,33 @@ public class AppConfig implements TestConfig, TestFileNameProvider {
         return new StreamsIOService(System.out, System.in);
     }
 
+
+    /**
+     * Создает бин конвертера QuestionDtoConverter.
+     *
+     * @return бин IOService
+     */
+    @Bean
+    public QuestionDtoConverter questionDtoConverter() {
+        return new QuestionDtoConverterImpl();
+    }
+
     /**
      * Создает бин QuestionDao.
      *
+     * @param questionDtoConverter конвертер данных вопросов
      * @return бин QuestionDao
      */
     @Bean
-    public QuestionDao questionDao() {
-        return new CsvQuestionDao(this);
+    public QuestionDao questionDao(QuestionDtoConverter questionDtoConverter) {
+        return new CsvQuestionDao(this, questionDtoConverter);
     }
 
     /**
      * Создает бин TestService.
      *
+     * @param ioService   сервис ввода/вывода
+     * @param questionDao dao вопросов
      * @return бин TestService
      */
     @Bean
@@ -91,6 +105,7 @@ public class AppConfig implements TestConfig, TestFileNameProvider {
     /**
      * Создает бин StudentService.
      *
+     * @param ioService сервис ввода/вывода
      * @return бин StudentService
      */
     @Bean
@@ -101,6 +116,7 @@ public class AppConfig implements TestConfig, TestFileNameProvider {
     /**
      * Создает бин ResultService.
      *
+     * @param ioService сервис ввода/вывода
      * @return бин ResultService
      */
     @Bean
@@ -111,6 +127,9 @@ public class AppConfig implements TestConfig, TestFileNameProvider {
     /**
      * Создает бин TestRunnerService.
      *
+     * @param testService    сервис тестирования
+     * @param studentService сервис обработки данных о студенте
+     * @param resultService  сервис обработки результатов тестирования
      * @return бин TestRunnerService
      */
     @Bean

@@ -1,10 +1,10 @@
 package ru.otus.hw.dao;
 
-import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.otus.hw.config.TestFileNameProvider;
 import ru.otus.hw.dao.dto.QuestionDto;
+import ru.otus.hw.dao.dto.QuestionDtoConverter;
 import ru.otus.hw.domain.Question;
 import ru.otus.hw.exceptions.QuestionReadException;
 
@@ -15,7 +15,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.otus.hw.utils.QuestionUtils.COLON_SEPARATOR;
 import static ru.otus.hw.utils.QuestionUtils.QUESTIONS_COUNT;
 
 /**
@@ -33,6 +32,11 @@ public class CsvQuestionDao implements QuestionDao {
     private final TestFileNameProvider fileNameProvider;
 
     /**
+     * Конвертер данных вопросов.
+     */
+    private final QuestionDtoConverter questionDtoConverter;
+
+    /**
      * Считывает вопросы и ответы к ним.
      *
      * @return список вопросов
@@ -42,14 +46,7 @@ public class CsvQuestionDao implements QuestionDao {
         List<Question> questions = new ArrayList<>();
         try (InputStream inputStream = getClass().getResourceAsStream("/" + fileNameProvider.getTestFileName());
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-
-            List<QuestionDto> questionDtoList = new CsvToBeanBuilder<QuestionDto>(reader)
-                    .withSkipLines(1)
-                    .withType(QuestionDto.class)
-                    .withSeparator(COLON_SEPARATOR)
-                    .build()
-                    .parse();
-
+            List<QuestionDto> questionDtoList = questionDtoConverter.convert(reader);
             int i = 0;
             while (i < QUESTIONS_COUNT) {
                 questions.add(questionDtoList.get(i).toDomainObject());
@@ -58,7 +55,6 @@ public class CsvQuestionDao implements QuestionDao {
         } catch (IOException e) {
             throw new QuestionReadException("An error occured while reading file with questions", e);
         }
-
         return questions;
     }
 }

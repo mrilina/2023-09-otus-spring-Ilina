@@ -3,6 +3,7 @@ package ru.otus.hw;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import ru.otus.hw.service.TestRunnerService;
 
 /**
@@ -12,6 +13,7 @@ import ru.otus.hw.service.TestRunnerService;
  */
 @Configuration
 @ComponentScan(basePackages = "ru.otus.hw.config")
+@EnableAspectJAutoProxy
 public class Application {
 
     /**
