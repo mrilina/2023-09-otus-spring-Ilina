@@ -1,0 +1,7 @@
+# Добавить сюда своих вопросов. Эту строку надо пропустить при настройке CsvToBean (withSkipLines)
+Der Autor von "Goldener Schlüssel oder Pinocchio-Abenteuer"?;Tolstoi A.N.%true|Puschkin A.S.%false|Dostojewski F.M.%false
+Wie viele Buchstaben gibt es im englischen Alphabet?;24%false|26%true
+Wie viele Farben gibt es in einem Regenbogen?;3%false|5%false|7%true|8%false
+Die durchschnittliche Entfernung von Saturn zur Sonne beträgt (sr. km)?;1,21%false|1,34%false|1,43%true
+Als das Wort «Fregatte» auf Russisch erschien...?;Peter I%true|Katharina II%false|Nikolaus I%false
+Wie viele Kontinente gibt es auf der Erde?;6%true|5%false|7%false|4%false
