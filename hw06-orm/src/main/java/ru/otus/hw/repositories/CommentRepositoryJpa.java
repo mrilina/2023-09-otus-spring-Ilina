@@ -2,38 +2,21 @@ package ru.otus.hw.repositories;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import ru.otus.hw.models.Comment;
-
-import java.util.List;
 
 /**
  * Репозиторий обработки сведений о комментариях.
  *
  * @author Irina Ilina
  */
-@Repository
+@Component
+@RequiredArgsConstructor
 public class CommentRepositoryJpa implements CommentRepository {
 
     @PersistenceContext
     private final EntityManager em;
-
-    /**
-     * Конструктор.
-     *
-     * @param em менеджер сущностей
-     */
-    public CommentRepositoryJpa(EntityManager em) {
-        this.em = em;
-    }
-
-    @Override
-    public List<Comment> findAllByBookId(Long bookId) {
-        var q = em.createQuery("select c from Comment c join fetch c.book as b where b.id = :bookId",
-                Comment.class);
-        q.setParameter("bookId", bookId);
-        return q.getResultList();
-    }
 
     @Override
     public Comment save(Comment comment) {

@@ -2,7 +2,7 @@ package ru.otus.hw.repositories;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.otus.hw.models.Genre;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Irina Ilina
  */
-@Repository
+@Component
 public class GenreRepositoryJpa implements GenreRepository {
 
     @PersistenceContext

@@ -10,10 +10,6 @@ import ru.otus.hw.models.Book;
 import ru.otus.hw.models.Comment;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 
 @DisplayName("Тест BookCommentRepositoryJpa должен")
 @DataJpaTest
@@ -65,25 +61,5 @@ class CommentRepositoryJpaTest {
         var updatedComment = testEntityManager.find(Comment.class, EXISTING_COMMENT_ID);
 
         assertThat(updatedComment.getText()).isEqualTo(UPDATED_COMMENT_TEXT);
-    }
-
-    @DisplayName("возвращать ожидаемые комментарии по идентификатору ниги")
-    @Test
-    void shouldReturnExpectedCommentByBookId() {
-        var comments = commentRepositoryJpa.findAllByBookId(TEST_BOOK_ID);
-        assertNotNull(comments);
-        assertEquals(2, comments.size());
-        assertEquals("Comment_2", comments.get(1).getText());
-    }
-
-    @DisplayName("удалять комментарии по идентификатору книги")
-    @Test
-    void shouldDeleteBookCommentById() {
-        var comments = commentRepositoryJpa.findAllByBookId(TEST_BOOK_ID);
-        assertNotNull(comments);
-        commentRepositoryJpa.deleteByBookId(TEST_BOOK_ID);
-
-        comments = commentRepositoryJpa.findAllByBookId(TEST_BOOK_ID);
-        assertTrue(comments.isEmpty());
     }
 }

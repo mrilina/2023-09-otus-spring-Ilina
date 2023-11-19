@@ -2,7 +2,7 @@ package ru.otus.hw.repositories;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.otus.hw.models.Author;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.Optional;
  *
  * @author Irina Ilina
  */
-@Repository
+@Component
 public class AuthorRepositoryJpa implements AuthorRepository {
 
     @PersistenceContext
