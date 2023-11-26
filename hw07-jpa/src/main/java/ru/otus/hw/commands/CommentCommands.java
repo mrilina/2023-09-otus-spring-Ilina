@@ -3,10 +3,7 @@ package ru.otus.hw.commands;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.hw.converters.CommentConverter;
 import ru.otus.hw.services.CommentService;
-
-import java.util.stream.Collectors;
 
 /**
  * Команды для обработки сведений о комментарии.
@@ -23,11 +20,6 @@ public class CommentCommands {
     private final CommentService commentService;
 
     /**
-     * Конвертер сведений о комментариях.
-     */
-    private final CommentConverter commentConverter;
-
-    /**
      * Возвращает все комментарии по идентификатору книги.
      *
      * @param bookId идентификатор книги
@@ -35,9 +27,7 @@ public class CommentCommands {
      */
     @ShellMethod(value = "Find all comments by book id", key = "ac")
     public String findAllCommentsByBookId(Long bookId) {
-        return commentService.findAllByBookId(bookId).stream()
-                .map(commentConverter::commentToString)
-                .collect(Collectors.joining("," + System.lineSeparator()));
+        return commentService.findCommentsByBookId(bookId);
     }
 
     /**
@@ -49,8 +39,7 @@ public class CommentCommands {
      */
     @ShellMethod(value = "Insert comment", key = "cins")
     public String insertComment(String text, long bookId) {
-        var savedComment = commentService.insert(text, bookId);
-        return commentConverter.commentToString(savedComment);
+        return commentService.insertComment(text, bookId);
     }
 
     /**

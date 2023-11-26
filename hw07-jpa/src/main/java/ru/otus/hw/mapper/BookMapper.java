@@ -25,9 +25,9 @@ public class BookMapper implements DtoMapper<Book, BookDto> {
                 .name(model.getTitle())
                 .genres(isNull(model.getGenres()) ? null : model.getGenres().stream().map(
                         g -> GenreDto.builder()
-                        .id(g.getId())
-                        .name(g.getName())
-                        .build()).collect(Collectors.toList()))
+                                .id(g.getId())
+                                .name(g.getName())
+                                .build()).collect(Collectors.toList()))
                 .author(AuthorDto.builder()
                         .id(model.getAuthor().getId())
                         .name(model.getAuthor().getFullName())

@@ -11,13 +11,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Application {
 
-	/**
-	 * Основная программа.
-	 *
-	 * @param args входные параметры
-	 */
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+    /**
+     * Основная программа.
+     *
+     * @param args входные параметры
+     */
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 
 }

@@ -2,12 +2,13 @@ package ru.otus.hw.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.otus.hw.models.Genre;
+import ru.otus.hw.dto.GenreDto;
+import ru.otus.hw.mapper.GenreMapper;
 import ru.otus.hw.repositories.GenreRepository;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Сервис обработки сведений о жанрах.
@@ -23,14 +24,41 @@ public class GenreServiceImpl implements GenreService {
      */
     private final GenreRepository genreRepository;
 
-    @Transactional(readOnly = true)
+    /**
+     * Маппер сведений о жанре.
+     */
+    private final GenreMapper genreMapper;
+
+    /**
+     * Сервис преобразования сведений о модели в строковое представление.
+     */
+    private final ConvertService convertService;
+
     @Override
-    public List<Genre> findAll() {
-        return genreRepository.findAll();
+    public List<GenreDto> findAll() {
+        return genreRepository.findAll().stream()
+                .map(genreMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Genre> findAllByIds(List<Long> ids) {
-        return genreRepository.findAllById(new HashSet<>(ids));
+    public String getAll() {
+        return findAll().stream()
+                .map(convertService::genreToString)
+                .collect(Collectors.joining("," + System.lineSeparator()));
+    }
+
+    @Override
+    public List<GenreDto> findAllByIds(List<Long> ids) {
+        return genreRepository.findAllById(new HashSet<>(ids)).stream()
+                .map(genreMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getAllByIds(List<Long> ids) {
+        return findAllByIds(ids).stream()
+                .map(convertService::genreToString)
+                .collect(Collectors.joining("," + System.lineSeparator()));
     }
 }

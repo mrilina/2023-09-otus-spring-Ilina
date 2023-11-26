@@ -84,7 +84,7 @@ class BookServiceImplTest {
         doReturn(Optional.of(expectedBooks.get(bookPos))).when(bookRepository).findById(bookId);
         var actualBook = bookService.findById(bookId);
 
-        assertEquals(expectedBooksDto.get(bookPos).getAuthor().getName(), actualBook.get().getAuthor().getFullName());
+        assertEquals(expectedBooksDto.get(bookPos).getAuthor().getName(), actualBook.getAuthor().getName());
     }
 
     @DisplayName("должен обновить книгу")
