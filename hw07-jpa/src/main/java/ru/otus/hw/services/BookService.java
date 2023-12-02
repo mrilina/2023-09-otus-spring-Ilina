@@ -1,6 +1,7 @@
 package ru.otus.hw.services;
 
 import ru.otus.hw.dto.BookDto;
+import ru.otus.hw.models.Book;
 
 import java.util.List;
 
@@ -12,22 +13,6 @@ import java.util.List;
 public interface BookService {
 
     /**
-     * Возвращает сведения о книге по идентификатору.
-     *
-     * @param id идентификатор
-     * @return сведений о книге
-     */
-    BookDto findById(long id);
-
-    /**
-     * Возвращает строковое представление сведений о книге.
-     *
-     * @param id идентификатор
-     * @return строковое представление
-     */
-    String getById(long id);
-
-    /**
      * Возвращает список книг.
      *
      * @return список книг
@@ -35,57 +20,43 @@ public interface BookService {
     List<BookDto> findAll();
 
     /**
-     * Возвращает строковое представление обо всех книгах.
+     * Возвращает сведения о книге по идентификатору.
      *
-     * @return строковое представление
+     * @param id идентификатор
+     * @return сведений о книге
      */
-    String getAll();
+    BookDto findBookById(Long id);
+
+    /**
+     * Возвращает сведения о книге по идентификатору.
+     *
+     * @param id идентификатор
+     * @return сведений о книге
+     */
+    Book getBookById(Long id);
 
     /**
      * Сохраняет сведения о книге.
      *
-     * @param title     наименование
+     * @param name      наименование
      * @param authorId  идентификатор сведений об авторе
      * @param genresIds список идентификаторов жанров
-     * @return сведения о книге
      */
-    BookDto insert(String title, long authorId, List<Long> genresIds);
-
-    /**
-     * Возвращает строковое представление о сохраненной книге.
-     *
-     * @param title     наименование
-     * @param authorId  идентификатор сведений об авторе
-     * @param genresIds список идентификаторов жанров
-     * @return строковое представление
-     */
-    String insertBook(String title, long authorId, List<Long> genresIds);
+    void insert(String name, Long authorId, List<Long> genresIds);
 
     /**
      * Обновляет сведения о книге.
      *
-     * @param title     наименование
+     * @param name      наименование
      * @param authorId  идентификатор сведений об авторе
      * @param genresIds список идентификаторов жанров
-     * @return сведения о книге
      */
-    BookDto update(long id, String title, long authorId, List<Long> genresIds);
-
-    /**
-     * Возвращает строковое представление об обновленных сведениях о книге.
-     *
-     * @param title     наименование
-     * @param authorId  идентификатор сведений об авторе
-     * @param genresIds список идентификаторов жанров
-     * @return строковое представление
-     */
-    String updateBook(long id, String title, long authorId, List<Long> genresIds);
-
+    Book update(Long id, String name, Long authorId, List<Long> genresIds);
 
     /**
      * Удаление сведений о книге по идентификатору.
      *
      * @param id идентификатор
      */
-    void deleteById(long id);
+    void deleteBookById(Long id);
 }

@@ -1,17 +1,19 @@
 package ru.otus.hw.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Сведения о комментарии.
  *
  * @author Irina Ilina
  */
+@Data
 @Builder
-@Getter
-@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommentDto {
 
     /**
@@ -22,5 +24,10 @@ public class CommentDto {
     /**
      * Текст.
      */
-    private String comment;
+    private String text;
+
+    /**
+     * Идентификатор книги.
+     */
+    private Long bookId;
 }

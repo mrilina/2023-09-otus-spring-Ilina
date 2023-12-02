@@ -3,20 +3,21 @@ package ru.otus.hw.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.hw.dto.GenreDto;
+import ru.otus.hw.exceptions.EntityNotFoundException;
 import ru.otus.hw.mapper.GenreMapper;
+import ru.otus.hw.models.Genre;
 import ru.otus.hw.repositories.GenreRepository;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Сервис обработки сведений о жанрах.
  *
  * @author Irina Ilina
  */
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class GenreServiceImpl implements GenreService {
 
     /**
@@ -24,41 +25,22 @@ public class GenreServiceImpl implements GenreService {
      */
     private final GenreRepository genreRepository;
 
-    /**
-     * Маппер сведений о жанре.
-     */
     private final GenreMapper genreMapper;
 
-    /**
-     * Сервис преобразования сведений о модели в строковое представление.
-     */
-    private final ConvertService convertService;
-
     @Override
-    public List<GenreDto> findAll() {
-        return genreRepository.findAll().stream()
-                .map(genreMapper::toDto)
-                .collect(Collectors.toList());
+    public List<GenreDto> getAll() {
+        List<Genre> genres = genreRepository.findAll();
+        return genres.stream().map(genreMapper::toDto).toList();
     }
 
     @Override
-    public String getAll() {
-        return findAll().stream()
-                .map(convertService::genreToString)
-                .collect(Collectors.joining("," + System.lineSeparator()));
+    public Genre getGenreById(Long id) {
+        return genreRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Genre with id %d not found".formatted(id)));
     }
 
     @Override
-    public List<GenreDto> findAllByIds(List<Long> ids) {
-        return genreRepository.findAllById(new HashSet<>(ids)).stream()
-                .map(genreMapper::toDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public String getAllByIds(List<Long> ids) {
-        return findAllByIds(ids).stream()
-                .map(convertService::genreToString)
-                .collect(Collectors.joining("," + System.lineSeparator()));
+    public List<Genre> findAllByIds(List<Long> ids) {
+        return genreRepository.findAllById(new HashSet<>(ids));
     }
 }

@@ -2,9 +2,8 @@ package ru.otus.hw.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.List;
 
@@ -13,11 +12,10 @@ import java.util.List;
  *
  * @author Irina Ilina
  */
+@Data
 @Builder
-@Getter
-@ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class BookDto {
 
     /**
@@ -39,9 +37,4 @@ public class BookDto {
      * Список жанров.
      */
     private List<GenreDto> genres;
-
-    /**
-     * Список комментариев к книге.
-     */
-    private List<CommentDto> comments;
 }

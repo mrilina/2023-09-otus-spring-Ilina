@@ -3,19 +3,20 @@ package ru.otus.hw.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.hw.dto.AuthorDto;
+import ru.otus.hw.exceptions.EntityNotFoundException;
 import ru.otus.hw.mapper.AuthorMapper;
+import ru.otus.hw.models.Author;
 import ru.otus.hw.repositories.AuthorRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Сервис обработки сведений об авторах.
  *
  * @author Irina Ilina
  */
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
 
     /**
@@ -28,11 +29,6 @@ public class AuthorServiceImpl implements AuthorService {
      */
     private final AuthorMapper authorMapper;
 
-    /**
-     * Сервис преобразования сведений о модели в строковое представление.
-     */
-    private final ConvertService convertService;
-
     @Override
     public List<AuthorDto> findAll() {
         return authorRepository.findAll().stream()
@@ -41,9 +37,8 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public String getAll() {
-        return findAll().stream()
-                .map(convertService::authorToString)
-                .collect(Collectors.joining("," + System.lineSeparator()));
+    public Author geAuthorById(Long id) {
+        return authorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Book with id %d not found".formatted(id)));
     }
 }

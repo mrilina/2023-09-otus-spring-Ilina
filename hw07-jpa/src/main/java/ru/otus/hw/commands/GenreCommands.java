@@ -5,8 +5,6 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.otus.hw.services.GenreService;
 
-import java.util.List;
-
 /**
  * Команды для обработки сведений о жанре.
  *
@@ -28,17 +26,7 @@ public class GenreCommands {
      */
     @ShellMethod(value = "Find all genres", key = "ag")
     public String findAllGenres() {
-        return genreService.getAll();
+        return genreService.getAll().toString();
     }
 
-    /**
-     * Возвращает строковое отображение сведений обо всех жанрах по их идентификаторам.
-     *
-     * @param genresIds список идентификаторов жанров
-     * @return строковое отображение сведений обо всех жанрах
-     */
-    @ShellMethod(value = "Find all genres by ids", key = "agids")
-    public String findAllGenresByIds(List<Long> genresIds) {
-        return genreService.getAllByIds(genresIds);
-    }
 }

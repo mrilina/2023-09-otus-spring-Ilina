@@ -3,6 +3,7 @@ package ru.otus.hw.commands;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import org.springframework.shell.standard.ShellOption;
 import ru.otus.hw.services.BookService;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class BookCommands {
      */
     @ShellMethod(value = "Find all books", key = "ab")
     public String findAllBooks() {
-        return bookService.getAll();
+        return bookService.findAll().toString();
     }
 
     /**
@@ -38,8 +39,8 @@ public class BookCommands {
      * @return строковое отображение сведений о книге
      */
     @ShellMethod(value = "Find book by id", key = "bbid")
-    public String findBookById(long id) {
-        return bookService.getById(id);
+    public String findBookById(Long id) {
+        return bookService.findBookById(id).toString();
     }
 
     /**
@@ -48,11 +49,10 @@ public class BookCommands {
      * @param title     наименование книги
      * @param authorId  идентификатор сведений об авторе
      * @param genresIds список идентификаторов сведений о жанрах
-     * @return строковое отображение сведений о книге
      */
     @ShellMethod(value = "Insert book", key = "bins")
-    public String insertBook(String title, long authorId, List<Long> genresIds) {
-        return bookService.insertBook(title, authorId, genresIds);
+    public void insertBook(String title, Long authorId, List<Long> genresIds) {
+        bookService.insert(title, authorId, genresIds);
     }
 
     /**
@@ -62,11 +62,10 @@ public class BookCommands {
      * @param title     наименование книги
      * @param authorId  идентификатор сведений об авторе
      * @param genresIds список идентификаторов сведений о жанрах
-     * @return строковое отображение сведений о книге
      */
     @ShellMethod(value = "Update book", key = "bupd")
-    public String updateBook(long id, String title, long authorId, List<Long> genresIds) {
-        return bookService.updateBook(id, title, authorId, genresIds);
+    public void updateBook(Long id, String title, Long authorId, List<Long> genresIds) {
+        bookService.update(id, title, authorId, genresIds);
     }
 
     /**
@@ -75,7 +74,8 @@ public class BookCommands {
      * @param id идентификатор книги
      */
     @ShellMethod(value = "Delete book by id", key = "bdel")
-    public void updateBook(long id) {
-        bookService.deleteById(id);
+    public void deleteBookById(@ShellOption Long id) {
+        bookService.deleteBookById(id);
     }
+
 }

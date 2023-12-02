@@ -1,6 +1,7 @@
 package ru.otus.hw.services;
 
 import ru.otus.hw.dto.AuthorDto;
+import ru.otus.hw.models.Author;
 
 import java.util.List;
 
@@ -18,11 +19,11 @@ public interface AuthorService {
      */
     List<AuthorDto> findAll();
 
-
     /**
-     * Возвращает строковое представление обо всех авторах.
+     * Возвращает сведения об авторе.
      *
-     * @return строковое представление
+     * @param id идентификатор
+     * @return сведения об автора
      */
-    String getAll();
+    Author geAuthorById(Long id);
 }

@@ -1,6 +1,7 @@
 package ru.otus.hw.services;
 
 import ru.otus.hw.dto.GenreDto;
+import ru.otus.hw.models.Genre;
 
 import java.util.List;
 
@@ -16,14 +17,15 @@ public interface GenreService {
      *
      * @return список жанров
      */
-    List<GenreDto> findAll();
+    List<GenreDto> getAll();
 
     /**
-     * Возвращает строковое представление списка жанров.
+     * Возвращает список жанров по идентификаторам.
      *
-     * @return строковое представление
+     * @param id список идентификаторов жанров
+     * @return список жанров
      */
-    String getAll();
+    Genre getGenreById(Long id);
 
     /**
      * Возвращает список жанров по идентификаторам.
@@ -31,13 +33,5 @@ public interface GenreService {
      * @param ids список идентификаторов жанров
      * @return список жанров
      */
-    List<GenreDto> findAllByIds(List<Long> ids);
-
-    /**
-     * Возвращает строковое представление списка жанров по идентификаторам.
-     *
-     * @param ids список идентификаторов жанров
-     * @return строковое представление
-     */
-    String getAllByIds(List<Long> ids);
+    List<Genre> findAllByIds(List<Long> ids);
 }

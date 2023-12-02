@@ -12,39 +12,43 @@ import java.util.List;
 public interface CommentService {
 
     /**
-     * Возвращает комментарии по идентификатору книги.
+     * Возвращает сведения о комментарии.
      *
-     * @param bookId идентификатор книги
-     * @return список комментариев
+     * @param id идентификатор комментария
+     * @return сведения о комментарии
      */
-    List<CommentDto> findAllByBookId(Long bookId);
-
-
-    /**
-     * Возвращает строковое представление комментариев по идентификатору книги.
-     *
-     * @param bookId идентификатор книги
-     * @return строковое представление комментариев
-     */
-    String findCommentsByBookId(Long bookId);
+    CommentDto getCommentById(Long id);
 
     /**
      * Сохраняет сведения о комментарии.
      *
      * @param text   текст комментария
      * @param bookId идентификатор книги
-     * @return сведения о комментарии
      */
-    CommentDto insert(String text, Long bookId);
+    void saveComment(String text, Long bookId);
 
     /**
-     * Возвращает строковое представление о сохраненном комментарии.
+     * Обновляет сведения о комментарии.
      *
      * @param text   текст комментария
      * @param bookId идентификатор книги
-     * @return строковое представление
      */
-    String insertComment(String text, Long bookId);
+    void updateComment(Long id, String text, Long bookId);
+
+    /**
+     * Удаляет сведения о комментарии по идентификатору.
+     *
+     * @param id идентификатор комментария
+     */
+    void deleteCommentById(Long id);
+
+    /**
+     * Возвращает комментарии по идентификатору книги.
+     *
+     * @param id идентификатор книги
+     * @return список комментариев
+     */
+    List<CommentDto> findCommentsByBookId(Long id);
 
     /**
      * Удаляет комментарии по идентификатору книги.

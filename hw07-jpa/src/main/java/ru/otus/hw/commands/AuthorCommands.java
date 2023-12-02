@@ -3,7 +3,10 @@ package ru.otus.hw.commands;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import ru.otus.hw.dto.AuthorDto;
 import ru.otus.hw.services.AuthorService;
+
+import java.util.List;
 
 /**
  * Команды для обработки сведений об авторах.
@@ -25,7 +28,8 @@ public class AuthorCommands {
      * @return строковое отображение сведений обо всех авторах
      */
     @ShellMethod(value = "Find all authors", key = "aa")
-    public String findAllAuthors() {
-        return authorService.getAll();
+    public String getAllAuthors() {
+        List<AuthorDto> authors = authorService.findAll();
+        return authors.toString();
     }
 }
