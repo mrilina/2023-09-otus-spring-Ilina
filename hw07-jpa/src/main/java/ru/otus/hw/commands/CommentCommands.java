@@ -3,10 +3,8 @@ package ru.otus.hw.commands;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.hw.converters.CommentConverter;
+import org.springframework.shell.standard.ShellOption;
 import ru.otus.hw.services.CommentService;
-
-import java.util.stream.Collectors;
 
 /**
  * Команды для обработки сведений о комментарии.
@@ -23,11 +21,6 @@ public class CommentCommands {
     private final CommentService commentService;
 
     /**
-     * Конвертер сведений о комментариях.
-     */
-    private final CommentConverter commentConverter;
-
-    /**
      * Возвращает все комментарии по идентификатору книги.
      *
      * @param bookId идентификатор книги
@@ -35,9 +28,7 @@ public class CommentCommands {
      */
     @ShellMethod(value = "Find all comments by book id", key = "ac")
     public String findAllCommentsByBookId(Long bookId) {
-        return commentService.findAllByBookId(bookId).stream()
-                .map(commentConverter::commentToString)
-                .collect(Collectors.joining("," + System.lineSeparator()));
+        return commentService.findCommentsByBookId(bookId).toString();
     }
 
     /**
@@ -45,21 +36,54 @@ public class CommentCommands {
      *
      * @param text   текст комментария
      * @param bookId идентификатор книги
-     * @return строковое представление комментария
      */
     @ShellMethod(value = "Insert comment", key = "cins")
-    public String insertComment(String text, long bookId) {
-        var savedComment = commentService.insert(text, bookId);
-        return commentConverter.commentToString(savedComment);
+    public void insertComment(String text, Long bookId) {
+        commentService.saveComment(text, bookId);
     }
+
+    /**
+     * Обновляет комментарий к книге.
+     *
+     * @param id     идентификатор комментария
+     * @param text   текст комментария
+     * @param bookId идентификатор книги
+     */
+    @ShellMethod(value = "update comment", key = "cupd")
+    public void updateComment(Long id, String text, Long bookId) {
+        commentService.updateComment(id, text, bookId);
+    }
+
+    /**
+     * Возвращает комментарий по идентификатору.
+     *
+     * @param id идентификатор
+     * @return строковое представление комментария
+     */
+    @ShellMethod(value = "get comment by id", key = "cid")
+    public String getCommentById(@ShellOption Long id) {
+        return commentService.getCommentById(id).toString();
+    }
+
+    /**
+     * Удаляет комментарий по идентификатору.
+     *
+     * @param id идентификатор
+     */
+    @ShellMethod(value = "delete comment by id", key = "cdel")
+    public void deleteCommentById(@ShellOption Long id) {
+        commentService.deleteCommentById(id);
+    }
+
 
     /**
      * Удаляет все комментарии по идентификатору книги.
      *
      * @param bookId идентификатор книги
      */
-    @ShellMethod(value = "Delete comment by book id", key = "cdel")
+    @ShellMethod(value = "Delete comment by book id", key = "acdel")
     public void deleteAllComments(long bookId) {
         commentService.deleteByBookId(bookId);
     }
+
 }

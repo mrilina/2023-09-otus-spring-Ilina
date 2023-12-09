@@ -11,11 +11,12 @@ import ru.otus.hw.models.Comment;
  */
 @Component
 public class CommentMapper implements DtoMapper<Comment, CommentDto> {
+
     @Override
     public CommentDto toDto(Comment model) {
         return CommentDto.builder()
                 .id(model.getId())
-                .comment(model.getText())
+                .text(model.getText())
                 .build();
     }
 }

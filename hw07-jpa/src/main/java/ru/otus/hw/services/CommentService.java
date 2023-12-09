@@ -1,7 +1,6 @@
 package ru.otus.hw.services;
 
 import ru.otus.hw.dto.CommentDto;
-import ru.otus.hw.models.Comment;
 
 import java.util.List;
 
@@ -13,21 +12,43 @@ import java.util.List;
 public interface CommentService {
 
     /**
-     * Возвращает комментарии по идентификатору книги.
+     * Возвращает сведения о комментарии.
      *
-     * @param bookId идентификатор книги
-     * @return список комментариев
+     * @param id идентификатор комментария
+     * @return сведения о комментарии
      */
-    List<CommentDto> findAllByBookId(Long bookId);
+    CommentDto getCommentById(Long id);
 
     /**
      * Сохраняет сведения о комментарии.
      *
      * @param text   текст комментария
      * @param bookId идентификатор книги
-     * @return сведения о комментарии
      */
-    Comment insert(String text, long bookId);
+    void saveComment(String text, Long bookId);
+
+    /**
+     * Обновляет сведения о комментарии.
+     *
+     * @param text   текст комментария
+     * @param bookId идентификатор книги
+     */
+    void updateComment(Long id, String text, Long bookId);
+
+    /**
+     * Удаляет сведения о комментарии по идентификатору.
+     *
+     * @param id идентификатор комментария
+     */
+    void deleteCommentById(Long id);
+
+    /**
+     * Возвращает комментарии по идентификатору книги.
+     *
+     * @param id идентификатор книги
+     * @return список комментариев
+     */
+    List<CommentDto> findCommentsByBookId(Long id);
 
     /**
      * Удаляет комментарии по идентификатору книги.

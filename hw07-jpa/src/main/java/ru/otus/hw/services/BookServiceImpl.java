@@ -3,23 +3,23 @@ package ru.otus.hw.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.hw.dto.BookDto;
 import ru.otus.hw.exceptions.EntityNotFoundException;
+import ru.otus.hw.mapper.BookMapper;
+import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Book;
-import ru.otus.hw.repositories.AuthorRepository;
+import ru.otus.hw.models.Genre;
 import ru.otus.hw.repositories.BookRepository;
-import ru.otus.hw.repositories.GenreRepository;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Сервис обработки сведений о книгах.
  *
  * @author Irina Ilina
  */
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
     /**
@@ -28,63 +28,61 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
 
     /**
-     * Репозиторий обработки сведений об авторах.
+     * Маппер сведений об книге.
      */
-    private final AuthorRepository authorRepository;
+    private final BookMapper bookMapper;
 
     /**
-     * Репозиторий обработки сведений о жанрах.
+     * Сервис обработки сведений об авторах.
      */
-    private final GenreRepository genreRepository;
+    private final AuthorService authorService;
 
-    @Transactional(readOnly = true)
+    /**
+     * Сервис обработки сведений о жанрах.
+     */
+    private final GenreService genreService;
+
     @Override
-    public Optional<Book> findById(long id) {
-        return bookRepository.findById(id);
+    public List<BookDto> findAll() {
+        List<Book> books = bookRepository.findAll();
+        return books.stream().map(bookMapper::toDto).toList();
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public List<Book> findAll() {
-        return bookRepository.findAll();
+    public BookDto findBookById(Long id) {
+        return bookMapper.toDto(bookRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Book with id %d not found".formatted(id))));
     }
 
-    @Transactional
     @Override
-    public Book insert(String title, long authorId, List<Long> genresIds) {
-        var author = authorRepository.findById(authorId).orElseThrow(
-                () -> new EntityNotFoundException("Author with id %d not found".
-                        formatted(authorId)
-                ));
-        var genres = genreRepository.findAllById(new HashSet<>(genresIds));
-        Book book = new Book();
-        book.setTitle(title);
-        book.setAuthor(author);
-        book.setGenres(genres);
-        return bookRepository.save(book);
-    }
-
-    @Transactional
-    @Override
-    public Book update(long id, String title, long authorId, List<Long> genresIds) {
-        Book book = bookRepository.findById(id)
+    public Book getBookById(Long id) {
+        return bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Book with id %d not found".formatted(id)));
-
-        var author = authorRepository.findById(authorId).orElseThrow(
-                () -> new EntityNotFoundException("Author with id %d not found".
-                        formatted(authorId)
-                ));
-        var genres = genreRepository.findAllById(new HashSet<>(genresIds));
-
-        book.setTitle(title);
-        book.setAuthor(author);
-        book.setGenres(genres);
-        return bookRepository.save(book);
     }
 
     @Transactional
     @Override
-    public void deleteById(long id) {
-        bookRepository.deleteById(id);
+    public void insert(String name, Long authorId, List<Long> genresIds) {
+        Author author = authorService.geAuthorById(authorId);
+        List<Genre> genres = genreService.findAllByIds(genresIds);
+        Book book = new Book(null, name, author, genres, null);
+        bookRepository.save(book);
+    }
+
+    @Transactional
+    @Override
+    public Book update(Long id, String name, Long authorId, List<Long> genresIds) {
+        Author author = authorService.geAuthorById(authorId);
+        List<Genre> genres = genreService.findAllByIds(genresIds);
+        Book book = new Book(id, name, author, genres, null);
+        bookRepository.save(book);
+        return book;
+    }
+
+    @Transactional
+    @Override
+    public void deleteBookById(Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(RuntimeException::new);
+        bookRepository.delete(book);
     }
 }

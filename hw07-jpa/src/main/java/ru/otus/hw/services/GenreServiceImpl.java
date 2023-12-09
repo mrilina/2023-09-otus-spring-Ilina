@@ -2,7 +2,9 @@ package ru.otus.hw.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import ru.otus.hw.dto.GenreDto;
+import ru.otus.hw.exceptions.EntityNotFoundException;
+import ru.otus.hw.mapper.GenreMapper;
 import ru.otus.hw.models.Genre;
 import ru.otus.hw.repositories.GenreRepository;
 
@@ -14,8 +16,8 @@ import java.util.List;
  *
  * @author Irina Ilina
  */
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class GenreServiceImpl implements GenreService {
 
     /**
@@ -23,10 +25,18 @@ public class GenreServiceImpl implements GenreService {
      */
     private final GenreRepository genreRepository;
 
-    @Transactional(readOnly = true)
+    private final GenreMapper genreMapper;
+
     @Override
-    public List<Genre> findAll() {
-        return genreRepository.findAll();
+    public List<GenreDto> getAll() {
+        List<Genre> genres = genreRepository.findAll();
+        return genres.stream().map(genreMapper::toDto).toList();
+    }
+
+    @Override
+    public Genre getGenreById(Long id) {
+        return genreRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Genre with id %d not found".formatted(id)));
     }
 
     @Override

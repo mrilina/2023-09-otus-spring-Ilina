@@ -13,6 +13,7 @@ import java.util.Optional;
  * @author Irina Ilina
  */
 public interface BookRepository extends JpaRepository<Book, Long> {
+
     @EntityGraph(attributePaths = {"author", "genres"})
     Optional<Book> findById(Long id);
 
