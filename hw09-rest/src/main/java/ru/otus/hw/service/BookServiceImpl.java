@@ -6,6 +6,7 @@ import ru.otus.hw.domain.Author;
 import ru.otus.hw.domain.Book;
 import ru.otus.hw.domain.Genre;
 import ru.otus.hw.dto.BookDto;
+import ru.otus.hw.exception.DataNotFoundException;
 import ru.otus.hw.mapper.BookMapper;
 import ru.otus.hw.repository.BookRepository;
 
@@ -49,7 +50,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto getBookById(Long id) {
-        return bookMapper.map(bookRepository.findById(id).orElseThrow(RuntimeException::new));
+        return bookMapper.map(bookRepository.findById(id).orElseThrow(DataNotFoundException::new));
     }
 
     @Override
@@ -70,7 +71,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteBookById(Long id) {
-        Book book = bookRepository.findById(id).orElseThrow(RuntimeException::new);
+        Book book = bookRepository.findById(id).orElseThrow(DataNotFoundException::new);
         bookRepository.delete(book);
     }
 

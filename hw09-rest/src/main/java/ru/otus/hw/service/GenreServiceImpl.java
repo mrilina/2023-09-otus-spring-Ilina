@@ -6,6 +6,7 @@ import ru.otus.hw.domain.Genre;
 import ru.otus.hw.dto.GenreDto;
 import ru.otus.hw.mapper.GenreMapper;
 import ru.otus.hw.repository.GenreRepository;
+import ru.otus.hw.exception.DataNotFoundException;
 
 import java.util.List;
 import java.util.stream.StreamSupport;
@@ -37,7 +38,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Genre geGenreById(Long id) {
-        return genreRepository.findById(id).orElseThrow(RuntimeException::new);
+        return genreRepository.findById(id).orElseThrow(DataNotFoundException::new);
     }
 
     @Override

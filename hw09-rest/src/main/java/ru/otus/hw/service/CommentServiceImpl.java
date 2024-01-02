@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.hw.domain.Comment;
 import ru.otus.hw.dto.CommentDto;
+import ru.otus.hw.exception.DataNotFoundException;
 import ru.otus.hw.mapper.CommentMapper;
 import ru.otus.hw.repository.CommentRepository;
 
@@ -32,7 +33,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto getCommentById(Long id) {
-        return commentMapper.map(commentRepository.findById(id).orElseThrow(RuntimeException::new));
+        return commentMapper.map(commentRepository.findById(id).orElseThrow(DataNotFoundException::new));
     }
 
     @Override
@@ -47,7 +48,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteCommentById(Long id) {
-        Comment comment = commentRepository.findById(id).orElseThrow(RuntimeException::new);
+        Comment comment = commentRepository.findById(id).orElseThrow(DataNotFoundException::new);
         commentRepository.delete(comment);
     }
 
