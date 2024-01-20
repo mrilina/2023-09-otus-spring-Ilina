@@ -44,7 +44,6 @@ public class BookServiceImpl implements BookService {
      */
     private final AuthorRepository authorRepository;
 
-    @Transactional
     @Override
     public BookDto create(BookCreateDto bookDto) {
         var genre = genreRepository.findById(bookDto.getGenreId())
@@ -86,7 +85,6 @@ public class BookServiceImpl implements BookService {
         return book;
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<Book> getAll(Sort sort) {
         return bookRepository.findAll(sort);
@@ -98,7 +96,6 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(() -> new DataNotFoundException(format(ErrorMessage.BOOK_NOT_FOUND, id)));
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<Book> getAllByGenreId(long genreId) {
         var genre = genreRepository.findById(genreId).orElseThrow(() -> new DataNotFoundException(
@@ -106,7 +103,6 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAllByGenreId(genre.getId());
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<Book> getAllByAuthorId(long authorId) {
         var author = authorRepository.findById(authorId).orElseThrow(() ->
@@ -114,13 +110,11 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAllByAuthorId(author.getId());
     }
 
-    @Transactional
     @Override
     public void deleteById(long id) {
         bookRepository.deleteById(id);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public void deleteAll() {
         bookRepository.deleteAll();

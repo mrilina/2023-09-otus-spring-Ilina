@@ -24,7 +24,6 @@ public class GenreServiceImpl implements GenreService {
      */
     private final GenreRepository genreRepository;
 
-    @Transactional(readOnly = true)
     @Override
     public List<Genre> getAll(Sort sort) {
         return genreRepository.findAll(sort);

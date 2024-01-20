@@ -33,7 +33,6 @@ public class CommentServiceImpl implements CommentService {
      */
     private final CommentRepository commentRepository;
 
-    @Transactional(readOnly = true)
     @Override
     public List<Comment> getAllByBookId(long bookId) {
         var book = bookRepository.findById(bookId)
