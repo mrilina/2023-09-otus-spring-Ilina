@@ -17,3 +17,4 @@ hw12-form-based-auth - ДЗ№12 В CRUD Web-приложение добавит
 hw13-security-acl - ДЗ №13 Ввести авторизацию на основе URL и/или доменных сущностей
 hw14-batch - ДЗ №14 Использовать Spring Batch для организации пакетной обработки данных в приложении
 hw15-endpoints - ДЗ №15 Реализовать обработку доменной сущности через каналы Spring Integration
+hw16-endpoints - ДЗ №16 Использовать метрики, healthchecks и logfile
