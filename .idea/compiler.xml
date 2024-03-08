@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="hw07-jpa" />
+        <module name="hw03-spring-boot" />
+        <module name="hw06-orm" />
+        <module name="hw15-endpoints" />
+        <module name="hw12-form-based-auth" />
+        <module name="hw02-annotation-config" />
+        <module name="hw08-mongo" />
+        <module name="hw05-jdbc" />
+        <module name="hw11-webflux" />
+        <module name="hw17-docker" />
+        <module name="hw04-spring-shell" />
+        <module name="hw13-security-acl" />
+        <module name="hw01-xml-config" />
+        <module name="hw14-batch" />
+      </profile>
+      <profile name="Annotation profile for hw09-rest" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
+        </processorPath>
+        <module name="hw09-rest" />
+      </profile>
+      <profile name="Annotation profile for hw10-mvc-rest" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.28/lombok-1.18.28.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/${mapstruct.version}/mapstruct-processor-${mapstruct.version}.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok-mapstruct-binding/0.2.0/lombok-mapstruct-binding-0.2.0.jar" />
+        </processorPath>
+        <module name="hw10-mvc-rest" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="hw03-spring-boot" options="-parameters" />
+      <module name="hw04-spring-shell" options="-parameters" />
+      <module name="hw05-jdbc" options="-parameters" />
+      <module name="hw06-orm" options="-parameters" />
+      <module name="hw07-jpa" options="-parameters" />
+      <module name="hw08-mongo" options="-parameters" />
+      <module name="hw09-rest" options="-parameters" />
+      <module name="hw10-mvc-rest" options="-parameters" />
+      <module name="hw11-webflux" options="-parameters" />
+      <module name="hw12-form-based-auth" options="-parameters" />
+      <module name="hw13-security-acl" options="-parameters" />
+      <module name="hw14-batch" options="-parameters" />
+      <module name="hw15-endpoints" options="-parameters" />
+      <module name="hw17-docker" options="-parameters" />
+    </option>
+  </component>
+</project>
